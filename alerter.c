@@ -9,8 +9,7 @@ int alertFailureCount = 0;
 #if (PRODUCTION_CODE_ENABLE != STD_ON)
 
 int networkAlertStub(float celcius )
-{
-    int retVal = 0;
+{   
     printf("ALERT: Temperature is %.1f celcius.\n", celcius);
     // Return 200 for ok
     // Return 500 for not-ok
@@ -35,7 +34,10 @@ void networkAlert_test (float celcius)
 
 void alertInCelcius(float farenheit)
 {
-    float celcius = (farenheit - 32) * 5 / 9;    
+    float celcius = (farenheit - 32) * 5 / 9;
+    printf("ALERT %.1f \n", celcius);
+    
+#if (PRODUCTION_CODE_ENABLE != STD_ON)    
     int returnCode = networkAlertStub(celcius);
     if (returnCode != 200)
     {
@@ -45,7 +47,6 @@ void alertInCelcius(float farenheit)
         // Add a test below to catch this bug. Alter the stub above, if needed.
         alertFailureCount += 0;
     }
-#if (PRODUCTION_CODE_ENABLE != STD_ON)
     networkAlert_test(celcius);    
 #endif
 
