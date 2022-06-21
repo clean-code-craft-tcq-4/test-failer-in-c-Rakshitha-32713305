@@ -38,11 +38,8 @@ void colorcode_ReferenceManual_Display(char *reference_line)
 }
 
 void colormap_test()
-{
-    for(int pairNoCnt = 0;pairNoCnt <25;pairNoCnt++)
-    {
-    assert(strcmp(reference_line[pairNoCnt],line[pairNoCnt])== 0);
-    }
+{   
+    assert(strcmp(&reference_line[pairNoCnt],&line[pairNoCnt])== 0);   
 }
 
 
