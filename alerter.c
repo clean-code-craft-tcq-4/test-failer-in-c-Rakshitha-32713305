@@ -6,7 +6,7 @@
 
 int alertFailureCount = 0;
 
-#if (PRODUCTION_CODE_ENABLE != STD_ON)
+#if (PRODUCTION_CODE_ENABLE == STD_OFF)
 
 int networkAlertStub(float celcius )
 {   
@@ -34,10 +34,8 @@ void networkAlert_test (float celcius)
 
 void alertInCelcius(float farenheit)
 {
-    float celcius = (farenheit - 32) * 5 / 9;
-    printf("ALERT %.1f \n", celcius);
-    
-#if (PRODUCTION_CODE_ENABLE != STD_ON)    
+    float celcius = (farenheit - 32) * 5 / 9;    
+#if (PRODUCTION_CODE_ENABLE == STD_OFF)    
     int returnCode = networkAlertStub(celcius);
     if (returnCode != 200)
     {
