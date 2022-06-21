@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <assert.h>
 
-#define PRODUCTION_CODE_ENABLE  STD_ON 
+#define PRODUCTION_CODE_ENABLE  STD_OFF 
 #define NETWORK_ALERT_THRESHOLDLEVEL 200
 
-#if (PRODUCTION_CODE_ENABLE != STD_ON)
-
 int alertFailureCount = 0;
+
+#if (PRODUCTION_CODE_ENABLE != STD_ON)
 
 int networkAlertStub(float celcius )
 {
@@ -18,7 +18,7 @@ int networkAlertStub(float celcius )
     return 200;
 }
 
-void networkAlert_test (int celcius)
+void networkAlert_test (float celcius)
 {
     if (celcius < NETWORK_ALERT_THRESHOLDLEVEL)
          {
@@ -54,7 +54,8 @@ void alertInCelcius(float farenheit)
 
 }
 
-int main() {
+int main()
+{
     alertInCelcius(400.5);
     alertInCelcius(303.6);
     printf("%d alerts failed.\n", alertFailureCount);
