@@ -2,8 +2,8 @@
 #include <assert.h>
 #include <string.h>
 
-const char line[1000];
-const char reference_line[1000];
+const char line[1000] = {0};
+const char reference_line[1000] = {0};
 
 const char* majorColor[] = {"White", "Red", "Black", "Yellow", "Violet"};
 const char* minorColor[] = {"Blue", "Orange", "Green", "Brown", "Slate"};
