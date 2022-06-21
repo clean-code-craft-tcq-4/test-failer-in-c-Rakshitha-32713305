@@ -39,7 +39,7 @@ void colorcode_ReferenceManual_Display(char *reference_line)
 
 void colormap_test()
 {   
-    assert(strcmp(&reference_line[pairNoCnt],&line[pairNoCnt])== 0);   
+    assert(strcmp(&reference_line[0],&line[0])== 0);   
 }
 
 
