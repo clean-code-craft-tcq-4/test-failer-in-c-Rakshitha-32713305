@@ -16,7 +16,7 @@ int printColorMap(char *line)
     {
         for(j = 0; j < 5; j++)
         {
-            pairno += sprintf(&line[pairno],"%d | %s | %s\n", ((i * 5 + j)+1), (majorColor[i]), (minorColor[j]));           
+            pairno += sprintf(&line[pairno],"%d\t|\t%s\t\t|\t%s\n", ((i * 5 + j)+1), (majorColor[i]), (minorColor[j]));           
         }
     }
     return i * j;
