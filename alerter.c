@@ -1,32 +1,80 @@
 #include <stdio.h>
 #include <assert.h>
 
-int alertFailureCount = 0;
+#define PRODUCTION_CODE_ENABLE  STD_ON 
+#define NETWORK_ALERT_THRESHOLDLEVEL 200
 
-int networkAlertStub(float celcius) {
+
+#if (PRODUCTION_CODE_ENABLE == STD_OFF)
+int alertFailureCount = 0;
+int networkAlertStub(float celcius )
+{   
+    int ret =0;
     printf("ALERT: Temperature is %.1f celcius.\n", celcius);
+    if (celcius < NETWORK_ALERT_THRESHOLDLEVEL)
+    {
     // Return 200 for ok
+        ret = 200 ;
+    }
+    else 
+    {
     // Return 500 for not-ok
-    // stub always succeeds and returns 200
-    return 200;
+      ret = 500 ;
+    }
+    return ret;
 }
 
-void alertInCelcius(float farenheit) {
-    float celcius = (farenheit - 32) * 5 / 9;
+void networkAlert_belowthreshold_test (float celcius)
+{
+    if (celcius < NETWORK_ALERT_THRESHOLDLEVEL)
+         {
+             assert(networkAlertStub(celcius)==200);
+         }      
+}
+
+void networkAlert_abovethreshold_test (float celcius)
+{
+    if (celcius >= NETWORK_ALERT_THRESHOLDLEVEL)
+         {
+            assert(networkAlertStub(celcius)==500);           
+         }   
+}
+
+void networkAlert_checkalertcount_test(float celcius)
+{
+    if (celcius >= NETWORK_ALERT_THRESHOLDLEVEL)
+         {
+            assert(networkAlertStub(celcius)!=0);       
+         } 
+}
+#endif
+
+void alertInCelcius(float farenheit)
+{
+    float celcius = (farenheit - 32) * 5 / 9;    
+#if (PRODUCTION_CODE_ENABLE == STD_OFF)    
     int returnCode = networkAlertStub(celcius);
-    if (returnCode != 200) {
+    if (returnCode != 200)
+    {
         // non-ok response is not an error! Issues happen in life!
         // let us keep a count of failures to report
         // However, this code doesn't count failures!
         // Add a test below to catch this bug. Alter the stub above, if needed.
-        alertFailureCount += 0;
+        alertFailureCount += 1;
     }
+    networkAlert_abovethreshold_test(celcius);
+    networkAlert_belowthreshold_test(celcius); 
+    networkAlert_checkalertcount_test(celcius); 
+    printf("%d alerts failed.\n", alertFailureCount);
+    
+#endif
+
 }
 
-int main() {
+int main()
+{
     alertInCelcius(400.5);
-    alertInCelcius(303.6);
-    printf("%d alerts failed.\n", alertFailureCount);
+    alertInCelcius(303.6);   
     printf("All is well (maybe!)\n");
     return 0;
 }
