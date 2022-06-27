@@ -36,9 +36,16 @@ void networkAlert_abovethreshold_test (float celcius)
 {
     if (celcius >= NETWORK_ALERT_THRESHOLDLEVEL)
          {
-            assert(networkAlertStub(celcius)==500);
-            assert(alertFailureCount != 0);    
+            assert(networkAlertStub(celcius)==500);           
          }   
+}
+
+void networkAlert_checkalertcount_test(float celcius)
+{
+    if (celcius >= NETWORK_ALERT_THRESHOLDLEVEL)
+         {
+            assert(networkAlertStub(celcius)!=0);       
+         } 
 }
 #endif
 
@@ -53,11 +60,13 @@ void alertInCelcius(float farenheit)
         // let us keep a count of failures to report
         // However, this code doesn't count failures!
         // Add a test below to catch this bug. Alter the stub above, if needed.
-        alertFailureCount += 0;
+        alertFailureCount += 1;
     }
     networkAlert_abovethreshold_test(celcius);
     networkAlert_belowthreshold_test(celcius); 
+    networkAlert_checkalertcount_test(celcius); 
     printf("%d alerts failed.\n", alertFailureCount);
+    
 #endif
 
 }
